@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_itschools_login/bloc/interfaces/auth_bloc.dart';
 import 'package:flutter_itschools_login/models/ui/auth_user.dart';
 import 'package:flutter_itschools_login/ui/screens/error_screen.dart';
-import 'package:flutter_itschools_login/ui/screens/success_screen.dart';
+import 'package:flutter_itschools_login/ui/screens/user_groups_screen.dart';
 import 'package:flutter_itschools_login/ui/widgets/bordered_text_field.dart';
 import 'package:flutter_itschools_login/ui/widgets/login_button.dart';
 import 'package:flutter_itschools_login/utils/auth_states.dart';
@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (user != null) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SuccessScreen()),
+        MaterialPageRoute(builder: (context) => UserGroupsScreen()),
       );
     } else {
       _onError("Incorrect email or password");

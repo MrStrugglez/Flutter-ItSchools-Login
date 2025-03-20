@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_itschools_login/bloc/interfaces/auth_bloc.dart';
 import 'package:flutter_itschools_login/themes/theme_config.dart';
 import 'package:flutter_itschools_login/ui/screens/login_screen.dart';
-import 'package:flutter_itschools_login/ui/screens/success_screen.dart';
+import 'package:flutter_itschools_login/ui/screens/user_groups_screen.dart';
 import 'package:flutter_itschools_login/utils/injection_container.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -24,7 +24,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    _authBloc.fetchHasLoginHash();
+    _authBloc.fetchHashLogin();
     super.initState();
   }
 
@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data!) {
-              return SuccessScreen();
+              return UserGroupsScreen();
             } else {
               return LoginScreen();
             }

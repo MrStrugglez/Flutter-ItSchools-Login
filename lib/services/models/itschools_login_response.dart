@@ -1,6 +1,6 @@
-import 'package:flutter_itschools_login/service/models/itschools_device_features.dart';
-import 'package:flutter_itschools_login/service/models/itschools_max_file_size.dart';
-import 'package:flutter_itschools_login/service/models/itschools_user.dart';
+import 'package:flutter_itschools_login/services/models/itschools_device_features.dart';
+import 'package:flutter_itschools_login/services/models/itschools_max_file_size.dart';
+import 'package:flutter_itschools_login/services/models/itschools_user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'itschools_login_response.g.dart';

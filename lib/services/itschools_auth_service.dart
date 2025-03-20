@@ -1,13 +1,17 @@
+import 'package:flutter_itschools_login/mixins/service_auth_header_mixin.dart';
 import 'package:flutter_itschools_login/models/ui/auth_user.dart';
-import 'package:flutter_itschools_login/service/interfaces/auth_service.dart';
-import 'package:flutter_itschools_login/service/models/itschools_login_request.dart';
-import 'package:flutter_itschools_login/service/models/itschools_login_response.dart';
+import 'package:flutter_itschools_login/services/interfaces/auth_service.dart';
+import 'package:flutter_itschools_login/services/models/itschools_login_request.dart';
+import 'package:flutter_itschools_login/services/models/itschools_login_response.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_itschools_login/extensions/uri_endpoints.dart';
 
-class ItSchoolsAuthService implements AuthService {
+class ItSchoolsAuthService with ServiceAuthHeadersMixin implements AuthService {
   late AuthUser _currentAuthUser;
+
+  @override
+  AuthUser get currentUser => _currentAuthUser;
 
   @override
   Future<AuthUser?> login(String username, String password) async {
@@ -34,11 +38,13 @@ class ItSchoolsAuthService implements AuthService {
     try {
       final http.Response response = await http.post(
         UriEndpoints.itSchoolLoginPath,
-        headers: {'Content-Type': 'application/json'},
+        headers: await headers,
         body: jsonEncode(request.toJson()),
       );
 
       if (response.statusCode == 200) {
+        setJWTFromHeaders(response.headers);
+
         final Map<String, dynamic> responseJson = jsonDecode(response.body);
         final ItSchoolsLoginResponse loginResponse =
             ItSchoolsLoginResponse.fromJson(responseJson);
@@ -57,11 +63,6 @@ class ItSchoolsAuthService implements AuthService {
       print('Failed to login. Error: $e');
       return null;
     }
-  }
-
-  @override
-  AuthUser getCurrentUser() {
-    return _currentAuthUser;
   }
 
   @override

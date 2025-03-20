@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_itschools_login/bloc/interfaces/auth_bloc.dart';
 import 'package:flutter_itschools_login/data/repositories/interfaces/user_data_repository.dart';
 import 'package:flutter_itschools_login/models/ui/auth_user.dart';
-import 'package:flutter_itschools_login/service/interfaces/auth_service.dart';
+import 'package:flutter_itschools_login/services/interfaces/auth_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 class UserAuthBloc implements AuthBloc {
@@ -22,13 +22,13 @@ class UserAuthBloc implements AuthBloc {
   Stream<bool> get hasHashStream => _hasHashController.stream;
 
   @override
-  Future<void> login(String email, String password) async {
-    final authUser = await _authService.login(email, password);
+  Future<void> login(String username, String password) async {
+    final authUser = await _authService.login(username, password);
     if (authUser != null) {
       await _userDataRepository.addUserData(authUser.username, authUser.hash);
       fetchCurrentAuthUser();
     } else {
-      _userAuthController.sink.addError('Invalid email or password');
+      _userAuthController.sink.addError('Invalid username or password');
     }
   }
 
@@ -50,11 +50,11 @@ class UserAuthBloc implements AuthBloc {
 
   @override
   Future<void> fetchCurrentAuthUser() async {
-    _userAuthController.sink.add(_authService.getCurrentUser());
+    _userAuthController.sink.add(_authService.currentUser);
   }
 
   @override
-  Future<void> fetchHasLoginHash() async {
+  Future<void> fetchHashLogin() async {
     try {
       final savedUser = await _userDataRepository.getUserData();
       await _loginWithHash(savedUser.username, savedUser.hash);
