@@ -1,7 +1,8 @@
-import 'package:flutter_itschools_login/models/auth_user.dart';
+import 'package:flutter_itschools_login/models/ui/auth_user.dart';
 
 abstract class AuthService {
-  Future<AuthUser?> login(String email, String password);
+  Future<AuthUser?> login(String username, String password);
+  Future<AuthUser?> loginWithHash(String username, String hash);
   AuthUser getCurrentUser();
   Future<void> logout();
 }

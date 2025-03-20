@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_itschools_login/bloc/interfaces/auth_bloc.dart';
-import 'package:flutter_itschools_login/models/auth_user.dart';
+import 'package:flutter_itschools_login/models/ui/auth_user.dart';
 import 'package:flutter_itschools_login/ui/widgets/logout_button.dart';
 import 'package:flutter_itschools_login/ui/widgets/result_banner_widget.dart';
 import 'package:flutter_itschools_login/utils/injection_container.dart';
@@ -95,7 +95,7 @@ class _SuccessScreenState extends State<SuccessScreen> {
   Widget _buildUserDetails(AuthUser authUser) {
     return Center(
       child: Text(
-        "Email: ${authUser.emailAddress} \n UserId: ${authUser.userId}",
+        "Email: ${authUser.username} \n UserId: ${authUser.hash}",
         textAlign: TextAlign.center,
         style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
       ),

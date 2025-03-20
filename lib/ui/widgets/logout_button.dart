@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_itschools_login/bloc/interfaces/auth_bloc.dart';
-import 'package:flutter_itschools_login/models/auth_user.dart';
+import 'package:flutter_itschools_login/models/ui/auth_user.dart';
 import 'package:flutter_itschools_login/ui/screens/error_screen.dart';
 import 'package:flutter_itschools_login/ui/screens/login_screen.dart';
 import 'package:flutter_itschools_login/utils/auth_states.dart';
