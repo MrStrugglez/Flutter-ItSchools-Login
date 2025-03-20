@@ -13,8 +13,7 @@ mixin ServiceAuthHeadersMixin {
     final String? authToken = await _token;
     return {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      if (authToken != null) 'Cookie': 'unity.jwt=$authToken',
+      if (authToken != null) 'Cookie': authToken,
     };
   }
 
