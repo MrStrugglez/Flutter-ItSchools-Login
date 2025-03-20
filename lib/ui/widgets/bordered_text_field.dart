@@ -34,14 +34,25 @@ class _BorderedTextFieldState extends State<BorderedTextField> {
       style: const TextStyle(color: Color(0xFF393939), fontSize: 13),
       decoration: InputDecoration(
         labelText: widget.label,
-        labelStyle: const TextStyle(color: Color(0xFF755DC1), fontSize: 15),
-        enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          borderSide: BorderSide(width: 1, color: Color(0xFF837E93)),
+        labelStyle: TextStyle(
+          color: Theme.of(context).primaryColor,
+          fontSize: 15,
         ),
-        focusedBorder: const OutlineInputBorder(
+        filled: true,
+        fillColor: Colors.white,
+        enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
-          borderSide: BorderSide(width: 1, color: Color(0xFF9F7BFF)),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderSide: BorderSide(
+            width: 1,
+            color: Theme.of(context).primaryColor,
+          ),
         ),
       ),
       onSubmitted: (value) {

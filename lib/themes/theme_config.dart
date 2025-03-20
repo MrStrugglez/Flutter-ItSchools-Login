@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
 class ThemeConfig {
-  static ThemeData geneticsTheme = ThemeData(
-    primaryColor: Color(0xFF7853A2),
-    colorScheme: ColorScheme.fromSwatch().copyWith(error: Color(0xFFE84B39)),
+  static ThemeData educateTheme = ThemeData(
+    primaryColor: Color(0xFF0F143B),
+    colorScheme: ColorScheme.fromSwatch().copyWith(
+      error: Color(0xFFD72632),
+      secondary: Color(0xFF0064FF),
+    ),
 
     appBarTheme: AppBarTheme(
-      backgroundColor: Color(0xFF7853A2),
+      backgroundColor: Color(0xFF0F143B),
       iconTheme: IconThemeData(color: Colors.white),
       titleTextStyle: TextStyle(color: Colors.white),
     ),
@@ -14,19 +17,19 @@ class ThemeConfig {
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         foregroundColor: Colors.white,
-        backgroundColor: Color(0xFF7853A2),
+        backgroundColor: Color(0xFF0F143B),
         textStyle: TextStyle(fontSize: 20),
       ),
     ),
 
     textTheme: TextTheme(
       headlineMedium: TextStyle(
-        color: Color(0xFF7853A2),
-        fontSize: 24,
+        color: Color(0xFF0F143B),
+        fontSize: 48,
         fontWeight: FontWeight.bold,
       ),
     ),
 
-    iconTheme: IconThemeData(color: Color(0xFF7853A2)),
+    iconTheme: IconThemeData(color: Color(0xFF0F143B)),
   );
 }

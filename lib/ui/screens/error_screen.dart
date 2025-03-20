@@ -1,54 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_itschools_login/ui/widgets/error_back_button_widget.dart';
-import 'package:flutter_itschools_login/ui/widgets/result_banner_widget.dart';
+import 'package:flutter_itschools_login/ui/widgets/styled_background_widget.dart';
 
-class ErrorScreen extends StatelessWidget {
-  final bannerPath = "assets/images/error_banner.png";
-  final message = "Failed to Login.";
-
+class ErrorScreen extends StatefulWidget {
   const ErrorScreen({super.key});
+
+  @override
+  State<ErrorScreen> createState() => _ErrorScreenState();
+}
+
+class _ErrorScreenState extends State<ErrorScreen> {
+  final logoPath = "assets/images/spinning_logo.png";
+  final message = "Failed to login";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 50),
-              child: ResultBannerWidget(
-                bannerPath: bannerPath,
-                icon: Icons.add_circle_outline_rounded,
-                rotationAngle: 45 * 3.14159 / 180,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 100,
-                left: 16,
-                right: 16,
-                bottom: 16,
-              ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 50),
+          child: StyledBackgroundWidget(
+            logoPath: logoPath,
+            icon: Icons.add,
+            drapeColor: Theme.of(context).colorScheme.error,
+            rotationAngle: 45 * 3.14159 / 180,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(
-                    child: Text(
-                      message,
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 130),
+                  SizedBox(height: 400),
+                  _buildMessage(),
+                  const SizedBox(height: 190),
                   ErrorBackButton(),
                 ],
               ),
             ),
-          ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMessage() {
+    return Center(
+      child: Text(
+        message,
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).primaryColor,
         ),
       ),
     );

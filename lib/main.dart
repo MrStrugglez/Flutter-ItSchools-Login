@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter ItSchools Login',
-      theme: ThemeConfig.geneticsTheme,
+      theme: ThemeConfig.educateTheme,
       home: StreamBuilder<bool>(
         stream: _authBloc.hasHashStream,
         builder: (context, snapshot) {

@@ -11,7 +11,7 @@ class ErrorBackButton extends StatelessWidget {
       onPressed: () => _navigateBack(context),
       style: ButtonStyle(
         backgroundColor: WidgetStateProperty.all(
-          Theme.of(context).colorScheme.error,
+          Theme.of(context).primaryColor,
         ),
         minimumSize: WidgetStateProperty.all(Size(double.infinity, 50)),
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
