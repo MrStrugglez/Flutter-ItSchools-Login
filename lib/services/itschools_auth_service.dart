@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_itschools_login/extensions/uri_endpoints.dart';
 
 class ItSchoolsAuthService with ServiceAuthHeadersMixin implements AuthService {
+  // Dependencies
   AuthUser? _currentAuthUser;
 
   @override
@@ -43,6 +44,7 @@ class ItSchoolsAuthService with ServiceAuthHeadersMixin implements AuthService {
       );
 
       if (response.statusCode == 200) {
+        // Set JWT using ServiceAuthHeadersMixin functionality. The intention is to update the JWT everytime it is returned.
         setJWTFromHeaders(response.headers);
 
         final Map<String, dynamic> responseJson = jsonDecode(response.body);

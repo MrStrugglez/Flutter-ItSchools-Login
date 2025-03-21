@@ -20,6 +20,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  // Dependencies
   final AuthBloc _authBloc = injector<AuthBloc>();
 
   @override
@@ -34,6 +35,9 @@ class _MyAppState extends State<MyApp> {
       title: 'Flutter ItSchools Login',
       theme: ThemeConfig.educateTheme,
       home: StreamBuilder<bool>(
+        // Use authentication stream to determine whether user has already logged in before.
+        // Show user groups if already logged in by logging in with hash and using JWT.
+        // Navigate to login screen if not.
         stream: _authBloc.hasHashStream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {

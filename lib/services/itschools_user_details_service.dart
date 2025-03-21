@@ -9,24 +9,26 @@ import 'package:http/http.dart' as http;
 class ItSchoolsUserDetailsService
     with ServiceAuthHeadersMixin
     implements UserDetailsService {
+  // Dependencies
   List<ItSchoolsUserGroup>? _currentUserGroups;
 
   @override
   List<ItSchoolsUserGroup>? get currentUserGroups => _currentUserGroups;
 
   @override
-  Future<List<ItSchoolsUserGroup>> getUserGroups(
-    String username,
-    String hash,
-  ) async {
+  Future<List<ItSchoolsUserGroup>> getUserGroups(String username) async {
     try {
       final http.Response response = await http.get(
+        // Construct path using username parameter.
         UriEndpoints.getItSchoolUserGroupsPath(username),
         headers: await headers,
       );
 
       if (response.statusCode == 200) {
+        // Set JWT using ServiceAuthHeadersMixin functionality. The intention is to update the JWT everytime it is returned.
         setJWTFromHeaders(response.headers);
+
+        // Map list of groups in JSON format to a list of ItSchoolUserGroup.
         final List<dynamic> responseJson = jsonDecode(response.body);
         _currentUserGroups =
             responseJson.map((json) {

@@ -15,7 +15,10 @@ class UserGroupsScreen extends StatefulWidget {
 }
 
 class _UserGroupsScreenState extends State<UserGroupsScreen> {
+  // Dependencies
   final UserDetailsBloc _userDetailsBloc = injector<UserDetailsBloc>();
+
+  // Constants
   final String _title = 'User Groups';
 
   @override
@@ -61,6 +64,7 @@ class _UserGroupsScreenState extends State<UserGroupsScreen> {
     );
   }
 
+  // This is only done to show the full capabilities of this screen since the API only returns 3 items.
   List<ItSchoolsUserGroup> _increaseGroupList(
     List<ItSchoolsUserGroup> userGroups,
   ) {

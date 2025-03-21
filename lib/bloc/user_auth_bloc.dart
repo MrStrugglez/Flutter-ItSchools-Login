@@ -9,6 +9,7 @@ import 'package:flutter_itschools_login/services/interfaces/user_details_service
 import 'package:rxdart/rxdart.dart';
 
 class UserAuthBloc with ServiceAuthHeadersMixin implements AuthBloc {
+  // Dependencies
   final AuthService _authService;
   final UserDetailsService _userDetailsService;
   final UserDataRepository _userDataRepository;
@@ -23,6 +24,7 @@ class UserAuthBloc with ServiceAuthHeadersMixin implements AuthBloc {
       BehaviorSubject<AuthUser?>();
   final BehaviorSubject<bool> _hasHashController = BehaviorSubject<bool>();
 
+  // Streams
   @override
   Stream<AuthUser?> get userAuthStream => _userAuthController.stream;
   @override
@@ -31,7 +33,9 @@ class UserAuthBloc with ServiceAuthHeadersMixin implements AuthBloc {
   @override
   Future<void> login(String username, String password) async {
     final authUser = await _authService.login(username, password);
+
     if (authUser != null) {
+      // Store user data in local storage.
       await _userDataRepository.addUserData(authUser.username, authUser.hash);
       fetchCurrentAuthUser();
     } else {
@@ -65,7 +69,9 @@ class UserAuthBloc with ServiceAuthHeadersMixin implements AuthBloc {
   @override
   Future<void> fetchHashLogin() async {
     try {
+      // Check whether JWT token is valid/not expired.
       if (await isTokenValid()) {
+        // Check for locally saved user data and the log in using stored hash.
         final savedUser = await _userDataRepository.getUserData();
         await _loginWithHash(savedUser.username, savedUser.hash);
         _hasHashController.sink.add(true);

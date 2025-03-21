@@ -5,6 +5,7 @@ import 'package:flutter_itschools_login/services/models/itschools_user_group.dar
 import 'package:rxdart/rxdart.dart';
 
 class UserDetailsBlocImpl implements UserDetailsBloc {
+  // Dependencies
   final UserDetailsService _userDetailsService;
   final UserDataRepository _userDataRepository;
 
@@ -13,17 +14,19 @@ class UserDetailsBlocImpl implements UserDetailsBloc {
   final BehaviorSubject<List<ItSchoolsUserGroup>> _userGroupsController =
       BehaviorSubject<List<ItSchoolsUserGroup>>();
 
+  // Streams
   @override
   Stream<List<ItSchoolsUserGroup>> get userGroupsStream =>
       _userGroupsController.stream;
 
   @override
   Future<void> fetchCurrentUserGroups() async {
-    final (String username, String hash) = await _userDataRepository
-        .getUserData()
-        .then((userData) => (userData.username, userData.hash));
+    // Unpack the username from the UserDataDTO and get user groups.
+    final username = await _userDataRepository.getUserData().then(
+      (userData) => userData.username,
+    );
     final List<ItSchoolsUserGroup> userGroups = await _userDetailsService
-        .getUserGroups(username, hash);
+        .getUserGroups(username);
     _userGroupsController.sink.add(userGroups);
   }
 

@@ -5,6 +5,7 @@ class LoginButton extends StatelessWidget {
 
   const LoginButton({super.key, required this.onPressed});
 
+  // Constants
   final buttonText = "Login";
 
   @override

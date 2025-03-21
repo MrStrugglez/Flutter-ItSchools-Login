@@ -18,8 +18,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final logoPath = "assets/images/spinning_logo.png";
-  final title = "Login";
+  // Dependencies
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -30,11 +29,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   AuthState _authState = AuthState.loggedOut;
 
+  // Constants
+  final logoPath = "assets/images/spinning_logo.png";
+  final title = "Login";
+
   @override
   void initState() {
-    _authBloc.userAuthStream.listen(_onUserAuth, onError: _onError);
-
     super.initState();
+    // Listen for any emmitions from the Auth stream. This allows the state to update when the user is logged in.
+    _authBloc.userAuthStream.listen(_onUserAuth, onError: _onError);
   }
 
   void _onUserAuth(AuthUser? user) {

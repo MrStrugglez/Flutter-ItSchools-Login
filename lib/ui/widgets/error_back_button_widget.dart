@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ErrorBackButton extends StatelessWidget {
   const ErrorBackButton({super.key});
 
+  // Constants
   final buttonText = "Back";
 
   @override

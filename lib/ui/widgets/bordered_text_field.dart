@@ -31,7 +31,7 @@ class _BorderedTextFieldState extends State<BorderedTextField> {
       textAlign: TextAlign.center,
       obscureText: widget.obscureText,
       keyboardType: widget.keyboardType,
-      style: const TextStyle(color: Color(0xFF393939), fontSize: 13),
+      style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 13),
       decoration: InputDecoration(
         labelText: widget.label,
         labelStyle: TextStyle(

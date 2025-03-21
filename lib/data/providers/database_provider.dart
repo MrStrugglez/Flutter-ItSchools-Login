@@ -1,8 +1,9 @@
-import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 
 class DatabaseProvider {
+  // Constants
   static const _dbName = "UserData_DB.db";
   static const _dbVersion = 1;
 
@@ -16,6 +17,7 @@ class DatabaseProvider {
   }
 
   Future<Database> init() async {
+    // Load local db into memory or create it if it does not exist.
     final externalDirectory = await getExternalStorageDirectory();
 
     if (externalDirectory == null) {

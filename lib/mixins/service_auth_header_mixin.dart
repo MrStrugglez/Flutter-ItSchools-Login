@@ -2,8 +2,12 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+/// Defines functionality to manage service headers with heavy focus on managing JWT.
 mixin ServiceAuthHeadersMixin {
+  // Dependencies
   final _secureStorage = const FlutterSecureStorage();
+
+  // Constants
   final _jwtTokenKey = "jwt_token";
   final _jwtRegex = r'unity\.jwt=([^;]+)';
 
@@ -19,6 +23,14 @@ mixin ServiceAuthHeadersMixin {
     };
   }
 
+  /// Extracts a JWT from the `set-cookie`
+  ///
+  /// This method looks for a JWT in the `set-cookie` header using a Regex.
+  /// If a valid JWT is found, it is saved asynchronously.
+  ///
+  /// [headers] - A map of HTTP headers where the JWT is expected to be found
+  /// in the `set-cookie` header.
+  ///
   Future<void> setJWTFromHeaders(Map<String, String> headers) async {
     final cookie = headers['set-cookie'];
     if (cookie != null) {
@@ -44,6 +56,19 @@ mixin ServiceAuthHeadersMixin {
     await _secureStorage.delete(key: _jwtTokenKey);
   }
 
+  /// Validates the current JWT to check if it is still valid.
+  ///
+  /// This method performs the following steps:
+  /// - Retrieves the token asynchronously.
+  /// - Ensures the token is not null and has the correct format.
+  /// - Decodes the payload section of the token and parses it as a JSON object.
+  /// - Checks if the payload contains an `exp` (expiration) field.
+  /// - Converts the `exp` field into a `DateTime` object and compares it with the current time.
+  ///
+  /// Returns:
+  /// - `true` if the token is valid and has not expired.
+  /// - `false` if the token is null, improperly formatted, missing the `exp` field, or expired.
+  ///
   Future<bool> isTokenValid() async {
     final token = await _token;
     if (token == null) return false;

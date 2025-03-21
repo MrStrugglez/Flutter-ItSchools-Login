@@ -10,6 +10,7 @@ class ErrorScreen extends StatefulWidget {
 }
 
 class _ErrorScreenState extends State<ErrorScreen> {
+  // Constants
   final logoPath = "assets/images/spinning_logo.png";
   final message = "Failed to login";
 
@@ -23,6 +24,7 @@ class _ErrorScreenState extends State<ErrorScreen> {
             logoPath: logoPath,
             icon: Icons.add,
             drapeColor: Theme.of(context).colorScheme.error,
+            // Rotating the plus icon 45 degress so that it looks like an X on the error screen.
             rotationAngle: 45 * 3.14159 / 180,
             child: Padding(
               padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),

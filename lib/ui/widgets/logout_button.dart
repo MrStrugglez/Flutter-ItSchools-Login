@@ -10,22 +10,24 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 class LogoutButton extends StatefulWidget {
   const LogoutButton({super.key});
 
-  final buttonText = "Logout";
-
   @override
   State<LogoutButton> createState() => _LogoutButtonState();
 }
 
 class _LogoutButtonState extends State<LogoutButton> {
+  // Dependencies
   final AuthBloc _authBloc = injector<AuthBloc>();
 
   AuthState _authState = AuthState.loggedIn;
 
+  // Constants
+  final _buttonText = "Logout";
+
   @override
   void initState() {
-    _authBloc.userAuthStream.listen(_onLogout, onError: _onError);
-
     super.initState();
+    // Listen for any emmitions from the Auth stream. The stream emmits null if the user has been logged out.
+    _authBloc.userAuthStream.listen(_onLogout, onError: _onError);
   }
 
   void _onLogout(AuthUser? user) {
@@ -59,7 +61,7 @@ class _LogoutButtonState extends State<LogoutButton> {
       padding: EdgeInsets.zero,
       iconSize: 30,
       splashRadius: 25,
-      tooltip: widget.buttonText,
+      tooltip: _buttonText,
     );
   }
 
