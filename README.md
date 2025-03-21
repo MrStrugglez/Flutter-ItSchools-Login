@@ -25,7 +25,6 @@ Below are some screenshots of the app:
 - Clean and concise source code for maintainability.
 - Compatibility with provided test credentials for validation.
 - Focus on UI/UX and server communication best practices.
-```
 
 ## Areas for Improvement
 
