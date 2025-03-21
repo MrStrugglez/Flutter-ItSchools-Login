@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildLoginTitle() {
     return Center(
-      child: Text(title, style: Theme.of(context).textTheme.headlineMedium),
+      child: Text(title, style: Theme.of(context).textTheme.headlineLarge),
     );
   }
 

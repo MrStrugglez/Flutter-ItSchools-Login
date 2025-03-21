@@ -23,11 +23,24 @@ class ThemeConfig {
     ),
 
     textTheme: TextTheme(
-      headlineMedium: TextStyle(
+      titleLarge: const TextStyle(color: Colors.white, fontSize: 24),
+      titleMedium: TextStyle(
+        color: Color(0xFF0F143B),
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+      ),
+      titleSmall: TextStyle(color: Colors.grey, fontSize: 14),
+      headlineLarge: TextStyle(
         color: Color(0xFF0F143B),
         fontSize: 48,
         fontWeight: FontWeight.bold,
       ),
+      headlineMedium: TextStyle(
+        color: Colors.white,
+        fontSize: 34,
+        fontWeight: FontWeight.bold,
+      ),
+      headlineSmall: TextStyle(color: Colors.white, fontSize: 26),
     ),
 
     iconTheme: IconThemeData(color: Color(0xFF0F143B)),

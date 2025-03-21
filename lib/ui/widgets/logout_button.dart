@@ -50,18 +50,16 @@ class _LogoutButtonState extends State<LogoutButton> {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
+    return IconButton(
       onPressed: _logout,
-      style: ButtonStyle(
-        minimumSize: WidgetStateProperty.all(Size(double.infinity, 50)),
-        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        ),
-      ),
-      child:
+      icon:
           _authState == AuthState.loading
               ? _buildLoader()
-              : Text(widget.buttonText),
+              : Icon(Icons.exit_to_app, size: 40, color: Colors.white),
+      padding: EdgeInsets.zero,
+      iconSize: 30,
+      splashRadius: 25,
+      tooltip: widget.buttonText,
     );
   }
 
