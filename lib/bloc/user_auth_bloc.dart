@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:flutter_itschools_login/bloc/interfaces/auth_bloc.dart';
 import 'package:flutter_itschools_login/data/repositories/interfaces/user_data_repository.dart';
+import 'package:flutter_itschools_login/mixins/service_auth_header_mixin.dart';
 import 'package:flutter_itschools_login/models/ui/auth_user.dart';
 import 'package:flutter_itschools_login/services/interfaces/auth_service.dart';
 import 'package:rxdart/rxdart.dart';
 
-class UserAuthBloc implements AuthBloc {
+class UserAuthBloc with ServiceAuthHeadersMixin implements AuthBloc {
   final AuthService _authService;
   final UserDataRepository _userDataRepository;
 
@@ -56,9 +57,13 @@ class UserAuthBloc implements AuthBloc {
   @override
   Future<void> fetchHashLogin() async {
     try {
-      final savedUser = await _userDataRepository.getUserData();
-      await _loginWithHash(savedUser.username, savedUser.hash);
-      _hasHashController.sink.add(true);
+      if (await isTokenValid()) {
+        final savedUser = await _userDataRepository.getUserData();
+        await _loginWithHash(savedUser.username, savedUser.hash);
+        _hasHashController.sink.add(true);
+      } else {
+        throw Exception('Invalid JWT token while doing has login');
+      }
     } catch (e) {
       _hasHashController.sink.add(false);
     }
