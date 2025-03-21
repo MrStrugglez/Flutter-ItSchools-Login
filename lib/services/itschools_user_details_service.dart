@@ -9,10 +9,10 @@ import 'package:http/http.dart' as http;
 class ItSchoolsUserDetailsService
     with ServiceAuthHeadersMixin
     implements UserDetailsService {
-  late List<ItSchoolsUserGroup> _currentUserGroups;
+  List<ItSchoolsUserGroup>? _currentUserGroups;
 
   @override
-  List<ItSchoolsUserGroup> get currentUserGroups => _currentUserGroups;
+  List<ItSchoolsUserGroup>? get currentUserGroups => _currentUserGroups;
 
   @override
   Future<List<ItSchoolsUserGroup>> getUserGroups(
@@ -34,7 +34,7 @@ class ItSchoolsUserDetailsService
               return test;
             }).toList();
 
-        return _currentUserGroups;
+        return _currentUserGroups!;
       } else {
         print('Failed to login. Status code: ${response.statusCode}');
         return [];
@@ -43,5 +43,10 @@ class ItSchoolsUserDetailsService
       print('Failed to login. Error: $e');
       return [];
     }
+  }
+
+  @override
+  void disposeUserGroups() {
+    _currentUserGroups = null;
   }
 }

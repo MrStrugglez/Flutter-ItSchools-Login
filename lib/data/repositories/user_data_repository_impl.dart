@@ -50,4 +50,15 @@ class UserDataRepositoryImpl extends UserDataRepository {
 
     return Future.value(_userData!);
   }
+
+  @override
+  Future<void> deleteUserData() async {
+    final database = await databaseProvider.database;
+
+    await database.transaction<void>((txn) async {
+      await txn.delete(DatabaseProvider.userDataTable);
+    });
+
+    _userData = null;
+  }
 }

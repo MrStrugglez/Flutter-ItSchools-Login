@@ -8,10 +8,10 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_itschools_login/extensions/uri_endpoints.dart';
 
 class ItSchoolsAuthService with ServiceAuthHeadersMixin implements AuthService {
-  late AuthUser _currentAuthUser;
+  AuthUser? _currentAuthUser;
 
   @override
-  AuthUser get currentUser => _currentAuthUser;
+  AuthUser? get currentUser => _currentAuthUser;
 
   @override
   Future<AuthUser?> login(String username, String password) async {
@@ -67,6 +67,6 @@ class ItSchoolsAuthService with ServiceAuthHeadersMixin implements AuthService {
 
   @override
   Future<void> logout() async {
-    //TODO add logout logic by clearing current user and local stores
+    _currentAuthUser = null;
   }
 }

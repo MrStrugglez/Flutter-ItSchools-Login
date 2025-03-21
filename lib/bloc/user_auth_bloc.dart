@@ -5,13 +5,19 @@ import 'package:flutter_itschools_login/data/repositories/interfaces/user_data_r
 import 'package:flutter_itschools_login/mixins/service_auth_header_mixin.dart';
 import 'package:flutter_itschools_login/models/ui/auth_user.dart';
 import 'package:flutter_itschools_login/services/interfaces/auth_service.dart';
+import 'package:flutter_itschools_login/services/interfaces/user_details_service.dart';
 import 'package:rxdart/rxdart.dart';
 
 class UserAuthBloc with ServiceAuthHeadersMixin implements AuthBloc {
   final AuthService _authService;
+  final UserDetailsService _userDetailsService;
   final UserDataRepository _userDataRepository;
 
-  UserAuthBloc(this._authService, this._userDataRepository);
+  UserAuthBloc(
+    this._authService,
+    this._userDataRepository,
+    this._userDetailsService,
+  );
 
   final BehaviorSubject<AuthUser?> _userAuthController =
       BehaviorSubject<AuthUser?>();
@@ -46,6 +52,8 @@ class UserAuthBloc with ServiceAuthHeadersMixin implements AuthBloc {
   @override
   Future<void> logout() async {
     _authService.logout();
+    _userDataRepository.deleteUserData();
+    _userDetailsService.disposeUserGroups();
     _userAuthController.sink.add(null);
   }
 
@@ -62,7 +70,7 @@ class UserAuthBloc with ServiceAuthHeadersMixin implements AuthBloc {
         await _loginWithHash(savedUser.username, savedUser.hash);
         _hasHashController.sink.add(true);
       } else {
-        throw Exception('Invalid JWT token while doing has login');
+        throw Exception('Invalid JWT token while doing hash login');
       }
     } catch (e) {
       _hasHashController.sink.add(false);

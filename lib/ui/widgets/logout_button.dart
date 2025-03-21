@@ -55,7 +55,7 @@ class _LogoutButtonState extends State<LogoutButton> {
       icon:
           _authState == AuthState.loading
               ? _buildLoader()
-              : Icon(Icons.exit_to_app, size: 40, color: Colors.white),
+              : Icon(Icons.exit_to_app, size: 30, color: Colors.white),
       padding: EdgeInsets.zero,
       iconSize: 30,
       splashRadius: 25,

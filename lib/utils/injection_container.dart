@@ -35,7 +35,11 @@ void setup() {
 
   //Blocs
   injector.registerFactory<AuthBloc>(
-    () => UserAuthBloc(injector<AuthService>(), injector<UserDataRepository>()),
+    () => UserAuthBloc(
+      injector<AuthService>(),
+      injector<UserDataRepository>(),
+      injector<UserDetailsService>(),
+    ),
   );
   injector.registerFactory<UserDetailsBloc>(
     () => UserDetailsBlocImpl(

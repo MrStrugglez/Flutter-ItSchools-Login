@@ -2,5 +2,6 @@ import 'package:flutter_itschools_login/services/models/itschools_user_group.dar
 
 abstract class UserDetailsService {
   Future<List<ItSchoolsUserGroup>> getUserGroups(String username, String hash);
-  List<ItSchoolsUserGroup> get currentUserGroups;
+  List<ItSchoolsUserGroup>? get currentUserGroups;
+  void disposeUserGroups();
 }
