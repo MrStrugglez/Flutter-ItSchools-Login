@@ -16,12 +16,16 @@ class UserSliverAppBar extends StatefulWidget {
 }
 
 class UserSliverAppBarState extends State<UserSliverAppBar> {
+  // Dependencies
   final AuthBloc _authBloc = injector<AuthBloc>();
+
+  // Constants
   final String _welcomeMessage = 'Welcome back!';
 
   @override
   void initState() {
     super.initState();
+    // Fetch the current user so the username can be displayed in the SliverAppBar.
     _authBloc.fetchCurrentAuthUser();
   }
 
@@ -56,6 +60,7 @@ class UserSliverAppBarState extends State<UserSliverAppBar> {
   }
 
   Widget _buildUsername() {
+    // Use user auth stream to display the current user's username.
     return StreamBuilder<AuthUser?>(
       stream: _authBloc.userAuthStream,
       builder: (context, snapshot) {
