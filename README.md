@@ -26,6 +26,12 @@ Below are some screenshots of the app:
 - Compatibility with provided test credentials for validation.
 - Focus on UI/UX and server communication best practices.
 
+### Running the Project
+First you have to run the following command. This builds serialation files for the DTO classes.
+```
+flutter pub run build_runner build
+```
+
 ## Areas for Improvement
 
 While the project achieves its primary objectives, there are several areas where it could be improved:
