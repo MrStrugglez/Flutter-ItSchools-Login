@@ -36,6 +36,9 @@ flutter pub run build_runner build
 
 While the project achieves its primary objectives, there are several areas where it could be improved:
 
+### Improved Data Management
+Currently if the JWT expires you are redirected to the login screen where you are forced to log in if you want to view the user groups. However all user data is not currently cleared when the JWT validation check fails. This is something I would like to add as an extra procution.
+
 ### Enhanced UI/UX
 
 I took insperation from the Optimi.co.za website and tried my best to match their style. I don't feel it came out quite right and I'd love to see a detailed style guide when doing something like this again.
