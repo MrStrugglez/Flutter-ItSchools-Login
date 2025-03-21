@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_itschools_login/bloc/interfaces/auth_bloc.dart';
+import 'package:flutter_itschools_login/mixins/load_manager_mixin.dart';
 import 'package:flutter_itschools_login/models/ui/auth_user.dart';
 import 'package:flutter_itschools_login/ui/screens/error_screen.dart';
 import 'package:flutter_itschools_login/ui/screens/login_screen.dart';
 import 'package:flutter_itschools_login/utils/auth_states.dart';
 import 'package:flutter_itschools_login/utils/injection_container.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LogoutButton extends StatefulWidget {
   const LogoutButton({super.key});
@@ -14,17 +14,16 @@ class LogoutButton extends StatefulWidget {
   State<LogoutButton> createState() => _LogoutButtonState();
 }
 
-class _LogoutButtonState extends State<LogoutButton> {
+class _LogoutButtonState extends State<LogoutButton> with LoadManagerMixin {
   // Dependencies
   final AuthBloc _authBloc = injector<AuthBloc>();
-
-  AuthState _authState = AuthState.loggedIn;
 
   // Constants
   final _buttonText = "Logout";
 
   @override
   void initState() {
+    setLoggedIn(this);
     super.initState();
     // Listen for any emmitions from the Auth stream. The stream emmits null if the user has been logged out.
     _authBloc.userAuthStream.listen(_onLogout, onError: _onError);
@@ -47,7 +46,7 @@ class _LogoutButtonState extends State<LogoutButton> {
       MaterialPageRoute(builder: (context) => const ErrorScreen()),
     );
 
-    setLoggedOut();
+    setLoggedOut(this);
   }
 
   @override
@@ -55,8 +54,8 @@ class _LogoutButtonState extends State<LogoutButton> {
     return IconButton(
       onPressed: _logout,
       icon:
-          _authState == AuthState.loading
-              ? _buildLoader()
+          authState == AuthState.loading
+              ? buildLoader(35, Colors.white)
               : Icon(Icons.exit_to_app, size: 30, color: Colors.white),
       padding: EdgeInsets.zero,
       iconSize: 30,
@@ -65,33 +64,12 @@ class _LogoutButtonState extends State<LogoutButton> {
     );
   }
 
-  Widget _buildLoader() {
-    return Center(
-      child: LoadingAnimationWidget.staggeredDotsWave(
-        color: Colors.white,
-        size: 35,
-      ),
-    );
-  }
-
   void _logout() async {
-    setLoading();
+    setLoading(this);
 
     // Added delay to simulate a longer logout request since this runs fairly quickly.
     await Future.delayed(Duration(seconds: 2));
 
     await _authBloc.logout();
-  }
-
-  void setLoading() {
-    setState(() {
-      _authState = AuthState.loading;
-    });
-  }
-
-  void setLoggedOut() {
-    setState(() {
-      _authState = AuthState.loggedOut;
-    });
   }
 }

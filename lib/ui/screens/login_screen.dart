@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_itschools_login/bloc/interfaces/auth_bloc.dart';
+import 'package:flutter_itschools_login/mixins/load_manager_mixin.dart';
 import 'package:flutter_itschools_login/models/ui/auth_user.dart';
 import 'package:flutter_itschools_login/ui/screens/error_screen.dart';
 import 'package:flutter_itschools_login/ui/screens/user_groups_screen.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_itschools_login/ui/widgets/login_button.dart';
 import 'package:flutter_itschools_login/ui/widgets/styled_background_widget.dart';
 import 'package:flutter_itschools_login/utils/auth_states.dart';
 import 'package:flutter_itschools_login/utils/injection_container.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,7 +17,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> with LoadManagerMixin {
   // Dependencies
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -26,8 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final FocusNode _passwordFocusNode = FocusNode();
 
   final AuthBloc _authBloc = injector<AuthBloc>();
-
-  AuthState _authState = AuthState.loggedOut;
 
   // Constants
   final logoPath = "assets/images/spinning_logo.png";
@@ -57,15 +55,15 @@ class _LoginScreenState extends State<LoginScreen> {
       MaterialPageRoute(builder: (context) => const ErrorScreen()),
     );
 
-    setLoggedOut();
+    setLoggedOut(this);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body:
-          _authState == AuthState.loading
-              ? _buildLoader()
+          authState == AuthState.loading
+              ? buildLoader(100, Theme.of(context).primaryColor)
               : SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 50),
@@ -123,40 +121,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildLoader() {
-    return Center(
-      child: LoadingAnimationWidget.staggeredDotsWave(
-        color: Theme.of(context).primaryColor,
-        size: 100,
-      ),
-    );
-  }
-
   Future<void> _login() async {
     String email = _emailController.text.trim();
     String password = _passwordController.text.trim();
 
-    setLoading();
+    setLoading(this);
 
     await _authBloc.login(email, password);
-  }
-
-  void setLoading() {
-    setState(() {
-      _authState = AuthState.loading;
-    });
-  }
-
-  void setLoggedIn() {
-    setState(() {
-      _authState = AuthState.loggedIn;
-    });
-  }
-
-  void setLoggedOut() {
-    setState(() {
-      _authState = AuthState.loggedOut;
-    });
   }
 
   @override

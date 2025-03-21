@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_itschools_login/bloc/interfaces/auth_bloc.dart';
+import 'package:flutter_itschools_login/mixins/load_manager_mixin.dart';
 import 'package:flutter_itschools_login/models/ui/auth_user.dart';
 import 'package:flutter_itschools_login/ui/screens/error_screen.dart';
 import 'package:flutter_itschools_login/ui/widgets/logout_button.dart';
 import 'package:flutter_itschools_login/utils/injection_container.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class UserSliverAppBar extends StatefulWidget {
   final String title;
@@ -15,7 +15,8 @@ class UserSliverAppBar extends StatefulWidget {
   State<UserSliverAppBar> createState() => UserSliverAppBarState();
 }
 
-class UserSliverAppBarState extends State<UserSliverAppBar> {
+class UserSliverAppBarState extends State<UserSliverAppBar>
+    with LoadManagerMixin {
   // Dependencies
   final AuthBloc _authBloc = injector<AuthBloc>();
 
@@ -76,22 +77,13 @@ class UserSliverAppBarState extends State<UserSliverAppBar> {
           _onError(snapshot.error);
         }
 
-        return _buildLoader();
+        return buildLoader(100, Theme.of(context).primaryColor);
       },
     );
   }
 
   Widget _buildTitle() {
     return Text(widget.title, style: Theme.of(context).textTheme.titleLarge);
-  }
-
-  Widget _buildLoader() {
-    return Center(
-      child: LoadingAnimationWidget.staggeredDotsWave(
-        color: Theme.of(context).primaryColor,
-        size: 100,
-      ),
-    );
   }
 
   void _onError(error) {

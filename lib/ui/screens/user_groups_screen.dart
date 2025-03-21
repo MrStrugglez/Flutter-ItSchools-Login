@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_itschools_login/bloc/interfaces/user_details_bloc.dart';
+import 'package:flutter_itschools_login/mixins/load_manager_mixin.dart';
 import 'package:flutter_itschools_login/services/models/itschools_user_group.dart';
 import 'package:flutter_itschools_login/ui/screens/error_screen.dart';
 import 'package:flutter_itschools_login/ui/widgets/user_groups_list_item.dart';
 import 'package:flutter_itschools_login/ui/widgets/user_sliver_app_bar.dart';
 import 'package:flutter_itschools_login/utils/injection_container.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class UserGroupsScreen extends StatefulWidget {
   const UserGroupsScreen({super.key});
@@ -14,7 +14,8 @@ class UserGroupsScreen extends StatefulWidget {
   State<UserGroupsScreen> createState() => _UserGroupsScreenState();
 }
 
-class _UserGroupsScreenState extends State<UserGroupsScreen> {
+class _UserGroupsScreenState extends State<UserGroupsScreen>
+    with LoadManagerMixin {
   // Dependencies
   final UserDetailsBloc _userDetailsBloc = injector<UserDetailsBloc>();
 
@@ -58,7 +59,7 @@ class _UserGroupsScreenState extends State<UserGroupsScreen> {
             _onError(snapshot.error);
           }
 
-          return _buildLoader();
+          return buildLoader(50, Colors.white);
         },
       ),
     );
@@ -69,15 +70,6 @@ class _UserGroupsScreenState extends State<UserGroupsScreen> {
     List<ItSchoolsUserGroup> userGroups,
   ) {
     return List.generate(8, (_) => userGroups).expand((list) => list).toList();
-  }
-
-  Widget _buildLoader() {
-    return Center(
-      child: LoadingAnimationWidget.staggeredDotsWave(
-        color: Colors.white,
-        size: 50,
-      ),
-    );
   }
 
   void _onError(error) {
