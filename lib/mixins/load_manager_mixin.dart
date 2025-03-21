@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart';
 import 'package:flutter_itschools_login/utils/auth_states.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
